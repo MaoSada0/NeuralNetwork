@@ -2,16 +2,16 @@
 
 void NetWork::Init(data_NetWork data) {
 	srand(time(NULL));
-	L = data.L;
-	size = new int[L];
-	for (int i = 0; i < L; i++) {
+	Layers = data.Layers;
+	size = new int[Layers];
+	for (int i = 0; i < Layers; i++) {
 		size[i] = data.size[i];
 	}
 
-	weights = new Matrix[L - 1];
-	bios = new double* [L - 1];
+	weights = new Matrix[Layers - 1];
+	bios = new double* [Layers - 1];
 
-	for (int i = 0; i < L - 1; i++) {
+	for (int i = 0; i < Layers - 1; i++) {
 		weights[i].Init(size[i + 1], size[i]);
 		bios[i] = new double[size[i + 1]];
 		weights[i].Rand();
@@ -20,24 +20,24 @@ void NetWork::Init(data_NetWork data) {
 		}
 	}
 
-	neurons_val = new double* [L];
-	neurons_err = new double* [L];
+	neurons_value = new double* [Layers];
+	neurons_error = new double* [Layers];
 
-	for (int i = 0; i < L; i++) {
-		neurons_val[i] = new double[size[i]];
-		neurons_err[i] = new double[size[i]];
+	for (int i = 0; i < Layers; i++) {
+		neurons_value[i] = new double[size[i]];
+		neurons_error[i] = new double[size[i]];
 	}
 
-	neurons_bios_val = new double[L - 1];
-	for (int i = 0; i < L - 1; i++) {
-		neurons_bios_val[i] = 1;
+	neurons_bios_value = new double[Layers - 1];
+	for (int i = 0; i < Layers - 1; i++) {
+		neurons_bios_value[i] = 1;
 	}
 }
 
 void NetWork::PrintConfig() {
-	cout << "NeuralNetwork has " << L << " layers" << endl;
+	cout << "NeuralNetwork has " << Layers << " layers" << endl;
 	cout << "Size: ";
-	for (int i = 0; i < L; i++) {
+	for (int i = 0; i < Layers; i++) {
 		cout << i + 1 << ") " << size[i] << " ";
 	}
 	cout << endl;
@@ -46,17 +46,17 @@ void NetWork::PrintConfig() {
 
 void NetWork::SetInput(double* values) {
 	for (int i = 0; i < size[0]; i++) {
-		neurons_val[0][i] = values[i];
+		neurons_value[0][i] = values[i];
 	}
 }
 
 double NetWork::ForwardFeed() {
-	for (int k = 1; k < L; ++k) {
-		Matrix::Multi(weights[k - 1], neurons_val[k - 1], size[k - 1], neurons_val[k]); // матрицу весов умножаем на столбец нейронов (size - это размер), потом то что хотим получить
-		Matrix::SumVector(neurons_val[k], bios[k - 1], size[k]); // суммируем этот вектор с биосом
-		actFunc.use(neurons_val[k], size[k]); // используем фнкцию чтобы вместисть в (0;1)
+	for (int k = 1; k < Layers; ++k) {
+		Matrix::Multi(weights[k - 1], neurons_value[k - 1], size[k - 1], neurons_value[k]); // матрицу весов умножаем на столбец нейронов (size - это размер), потом то что хотим получить
+		Matrix::Sum(neurons_value[k], bios[k - 1], size[k]); // суммируем этот вектор с биосом
+		actFunc.use(neurons_value[k], size[k]); // используем фнкцию чтобы вместисть в (0;1)
 	}
-	int pred = SearchMaxIndex(neurons_val[L - 1]); //ответ нейросети
+	int pred = SearchMaxIndex(neurons_value[Layers - 1]); //ответ нейросети
 	return pred;
 }
 
@@ -64,7 +64,7 @@ int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в в
 	double max = value[0];
 	int prediction = 0;
 	double tmp;
-	for (int j = 1; j < size[L - 1]; j++) {
+	for (int j = 1; j < size[Layers - 1]; j++) {
 		tmp = value[j];
 		if (tmp > max) {
 			prediction = j;
@@ -77,39 +77,39 @@ int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в в
 
 void NetWork::PrintValues(int L) {
 	for (int j = 0; j < size[L]; j++) {
-		cout << j << " " << neurons_val[L][j] << endl;
+		cout << j << " " << neurons_value[L][j] << endl;
 	}
 }
 
 void NetWork::BackPropogation(double expect) {
-	for (int i = 0; i < size[L - 1]; i++) { // считаем дельту для выходных нейронов
+	for (int i = 0; i < size[Layers - 1]; i++) { // считаем дельту для выходных нейронов
 		if (i != (int)expect) {
-			neurons_err[L - 1][i] = -neurons_val[L - 1][i] * actFunc.useDer(neurons_val[L - 1][i]);
+			neurons_error[Layers - 1][i] = -neurons_value[Layers - 1][i] * actFunc.useDer(neurons_value[Layers - 1][i]);
 		}
 		else {
-			neurons_err[L - 1][i] = (1.0 - neurons_val[L - 1][i]) * actFunc.useDer(neurons_val[L - 1][i]);
+			neurons_error[Layers - 1][i] = (1.0 - neurons_value[Layers - 1][i]) * actFunc.useDer(neurons_value[Layers - 1][i]);
 		}
 	}
 
-	for (int k = L - 2; k > 0; k--) { // считаем дельту для скрытых нейронов
-		Matrix::Multi_T(weights[k], neurons_err[k + 1], size[k + 1], neurons_err[k]);
+	for (int k = Layers - 2; k > 0; k--) { // считаем дельту для скрытых нейронов
+		Matrix::Multi_T(weights[k], neurons_error[k + 1], size[k + 1], neurons_error[k]);
 		for (int j = 0; j < size[k]; j++) {
-			neurons_err[k][j] *= actFunc.useDer(neurons_val[k][j]);
+			neurons_error[k][j] *= actFunc.useDer(neurons_value[k][j]);
 		}
 	}
 }
 
 void NetWork::WeightsUpdater(double lr) {
-	for (int i = 0; i < L - 1; ++i) {
+	for (int i = 0; i < Layers - 1; ++i) {
 		for (int j = 0; j < size[i + 1]; ++j) {
 			for (int k = 0; k < size[i]; ++k) {
-				weights[i](j, k) += neurons_val[i][k] * neurons_err[i + 1][j] * lr;
+				weights[i](j, k) += neurons_value[i][k] * neurons_error[i + 1][j] * lr;
 			}
 		}
 	}
-	for (int i = 0; i < L - 1; i++) {
+	for (int i = 0; i < Layers - 1; i++) {
 		for (int k = 0; k < size[i + 1]; k++) {
-			bios[i][k] += neurons_err[i + 1][k] * lr;
+			bios[i][k] += neurons_error[i + 1][k] * lr;
 		}
 	}
 }
@@ -121,10 +121,10 @@ void NetWork::SaveWeights() {
 		cout << "Error reading the file";
 		system("pause");
 	}
-	for (int i = 0; i < L - 1; ++i)
+	for (int i = 0; i < Layers - 1; ++i)
 		fout << weights[i] << " ";
 
-	for (int i = 0; i < L - 1; ++i) {
+	for (int i = 0; i < Layers - 1; ++i) {
 		for (int j = 0; j < size[i + 1]; ++j) {
 			fout << bios[i][j] << " ";
 		}
@@ -140,10 +140,10 @@ void NetWork::ReadWeights() {
 		cout << "Error reading the file";
 		system("pause");
 	}
-	for (int i = 0; i < L - 1; ++i) {
+	for (int i = 0; i < Layers - 1; ++i) {
 		fin >> weights[i];
 	}
-	for (int i = 0; i < L - 1; ++i) {
+	for (int i = 0; i < Layers - 1; ++i) {
 		for (int j = 0; j < size[i + 1]; ++j) {
 			fin >> bios[i][j];
 		}

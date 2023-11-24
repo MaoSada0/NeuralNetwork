@@ -26,7 +26,7 @@ data_NetWork ReadDataNetWork(string path) {
 		fin >> tmp;
 		if (tmp == "NetWork") {
 			fin >> L;
-			data.L = L;
+			data.Layers = L;
 			data.size = new int[L];
 
 			for (int i = 0; i < L; i++) {

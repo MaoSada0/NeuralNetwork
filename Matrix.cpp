@@ -38,7 +38,7 @@ void Matrix::Multi(const Matrix& m1, const double* neuron, int n, double* c) {
 	}
 }
 
-void Matrix::SumVector(double* a, const double* b, int n) {
+void Matrix::Sum(double* a, const double* b, int n) {
 	for (int i = 0; i < n; i++) {
 		a[i] = a[i] + b[i];
 	}
