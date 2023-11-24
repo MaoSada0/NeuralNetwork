@@ -135,7 +135,7 @@ int main() {
 
 	chrono::duration<double> time;
 
-	NW_config = ReadDataNetWork("files/Config.txt");
+	NW_config = ReadDataNetWork("files/Settings.txt");
 	NW.Init(NW_config);
 	NW.PrintConfig();
 
