@@ -145,7 +145,7 @@ int main() {
 
 		if (study) {
 			int examples;
-			data = ReadData("lib_MNIST_edit.txt", NW_config, examples);
+			data = ReadData("files/lib_MNIST_edit.txt", NW_config, examples);
 
 			auto begin = chrono::steady_clock::now();
 
@@ -191,7 +191,7 @@ int main() {
 		if (test_flag) {
 			int ex_tests;
 			data_info* data_test;
-			data_test = ReadData("lib_10k.txt", NW_config, ex_tests);
+			data_test = ReadData("files/lib_10k.txt", NW_config, ex_tests);
 			ra = 0;
 			for (int i = 0; i < ex_tests; ++i) {
 				NW.SetInput(data_test[i].pixels);
