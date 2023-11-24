@@ -18,9 +18,6 @@ data_NetWork ReadDataNetWork(string path) {
 	if (!fin.is_open()) {
 		cout << "Err reading file " << path << endl;
 	}
-	else {
-		cout << path << " loading...\n";
-	}
 
 	string tmp;
 	int L;
@@ -52,7 +49,7 @@ data_info* ReadData(string path, const data_NetWork& data_NW, int& examples) {
 		cout << "Err reading file " << path << endl;
 	}
 	else {
-		if (path != "output.txt") {
+		if (path != "files/output.txt") {
 			cout << path << " load... \n";
 		}
 	}
@@ -88,6 +85,7 @@ void checkNum() {
 	cout << "Enter name of file (name.png): ";
 	string s;
 	cin >> s;
+	s = "numbers/" + s;
 
 	cv::Mat image = cv::imread(s, cv::IMREAD_GRAYSCALE);
 
@@ -96,10 +94,11 @@ void checkNum() {
 		cout << "Enter name of file (name.png): ";
 		string s;
 		cin >> s;
+		s = "numbers/" + s;
 		image = cv::imread(s, cv::IMREAD_GRAYSCALE);
 	}
 
-	std::ofstream outputFile("output.txt");
+	std::ofstream outputFile("files/output.txt");
 
 	if (!outputFile.is_open()) {
 		std::cerr << "Failed to open the output file." << std::endl;
@@ -136,7 +135,7 @@ int main() {
 
 	chrono::duration<double> time;
 
-	NW_config = ReadDataNetWork("Config.txt");
+	NW_config = ReadDataNetWork("files/Config.txt");
 	NW.Init(NW_config);
 	NW.PrintConfig();
 
@@ -209,7 +208,7 @@ int main() {
 
 			int ex_tests;
 			data_info* data_test;
-			data_test = ReadData("output.txt", NW_config, ex_tests);
+			data_test = ReadData("files/output.txt", NW_config, ex_tests);
 
 			for (int i = 0; i < ex_tests; ++i) {
 				NW.SetInput(data_test[i].pixels);

@@ -35,12 +35,13 @@ void NetWork::Init(data_NetWork data) {
 }
 
 void NetWork::PrintConfig() {
-	cout << "*******************************************************\n";
-	cout << "Network has " << L << " layers\nSIZE[]: ";
+	cout << "NeuralNetwork has " << L << " layers" << endl;
+	cout << "Size: ";
 	for (int i = 0; i < L; i++) {
-		cout << i + 1 << ": " << size[i] << " ";
+		cout << i + 1 << ") " << size[i] << " ";
 	}
-	cout << "\n*******************************************************\n\n";
+	cout << endl;
+	cout << endl;
 }
 
 void NetWork::SetInput(double* values) {
@@ -115,7 +116,7 @@ void NetWork::WeightsUpdater(double lr) {
 
 void NetWork::SaveWeights() {
 	ofstream fout;
-	fout.open("Weights.txt");
+	fout.open("files/Weights.txt");
 	if (!fout.is_open()) {
 		cout << "Error reading the file";
 		system("pause");
@@ -134,7 +135,7 @@ void NetWork::SaveWeights() {
 
 void NetWork::ReadWeights() {
 	ifstream fin;
-	fin.open("Weights.txt");
+	fin.open("files/Weights.txt");
 	if (!fin.is_open()) {
 		cout << "Error reading the file";
 		system("pause");
