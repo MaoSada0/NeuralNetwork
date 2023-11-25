@@ -34,7 +34,7 @@ void NetWork::Init(data_NetWork data) {
 	}
 }
 
-void NetWork::PrintConfig() {
+void NetWork::PrintSettings() {
 	cout << "NeuralNetwork has " << Layers << " layers" << endl;
 	cout << "Size: ";
 	for (int i = 0; i < Layers; i++) {
@@ -52,12 +52,12 @@ void NetWork::SetInput(double* values) {
 
 double NetWork::ForwardFeed() {
 	for (int k = 1; k < Layers; ++k) {
-		Matrix::Multi(weights[k - 1], neurons_value[k - 1], size[k - 1], neurons_value[k]); // матрицу весов умножаем на столбец нейронов (size - это размер), потом то что хотим получить
-		Matrix::Sum(neurons_value[k], bios[k - 1], size[k]); // суммируем этот вектор с биосом
-		actFunc.use(neurons_value[k], size[k]); // используем фнкцию чтобы вместисть в (0;1)
+		Matrix::Multi(weights[k - 1], neurons_value[k - 1], size[k - 1], neurons_value[k]); 
+		Matrix::Sum(neurons_value[k], bios[k - 1], size[k]);
+		actFunc.use(neurons_value[k], size[k]); 
 	}
-	int pred = SearchMaxIndex(neurons_value[Layers - 1]); //ответ нейросети
-	return pred;
+	int pred = SearchMaxIndex(neurons_value[Layers - 1]); 
+	return pred; //ответ нейросети
 }
 
 int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в вектор-столбце

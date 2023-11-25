@@ -23,7 +23,7 @@ class NetWork
 
 public:
 	void Init(data_NetWork data);
-	void PrintConfig();
+	void PrintSettings();
 	void SetInput(double* values);
 
 	double ForwardFeed();

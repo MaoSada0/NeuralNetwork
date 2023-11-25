@@ -128,7 +128,7 @@ int main() {
 	double right = 0; // правильная цифра
 	double predict = 0; // предсказанная цифра
 	double maxra = 0; // макс колво правильных ответов за один заход
-	int epoch = 0; // эпохи, заходы короче
+	int count = 0; // эпохи, заходы короче
 
 	bool study = true;
 	bool repeat = true;
@@ -137,7 +137,7 @@ int main() {
 
 	NW_config = ReadDataNetWork("files/Settings.txt");
 	NW.Init(NW_config);
-	NW.PrintConfig();
+	NW.PrintSettings();
 
 	while (true) {
 		cout << "Study? (1/0)" << endl;
@@ -158,7 +158,7 @@ int main() {
 					predict = NW.ForwardFeed(); // предсказываем цифру
 					if (predict != right) { // обучаем если не совпадает
 						NW.BackPropogation(right);
-						NW.WeightsUpdater(0.15 * exp(-epoch / 20.));
+						NW.WeightsUpdater(0.15 * exp(-count / 20.));
 					}
 					else {
 						ra++;
@@ -169,9 +169,9 @@ int main() {
 				if (ra > maxra) {
 					maxra = ra;
 				}
-				cout << "ra: " << ra / examples * 100 << "\t" << "maxra: " << maxra / examples * 100 << "\t" << "epoch: " << epoch << "\tTIME: " << time.count() << endl;
-				epoch++;
-				if (epoch == 20) { // тк до 100% никогда не дойдем выйдем после 20 обучений
+				cout << "ra: " << ra / examples * 100 << "\t" << "maxra: " << maxra / examples * 100 << "\t" << "epoch: " << count << "\tTIME: " << time.count() << endl;
+				count++;
+				if (count == 20) { // тк до 100% никогда не дойдем выйдем после 20 обучений
 					break;
 				}
 			}
