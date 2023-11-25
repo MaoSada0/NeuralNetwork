@@ -61,4 +61,8 @@
   
 **Методы:**
 - ````Init(data_NetWork data)```` - инициализируем нейросеть 
-...
+- ````PrintSettings()```` - выводим settings
+- ````SetInput(double* values)```` - подаем на вход нейросети данные
+- ````ForwardFeed()```` - функция прямого распростронения
+- ````SearchMaxIndex(double* value)```` - ищем индекс max элемента вектора значений
+- ````PrintValues```` - выводим значения на экран
