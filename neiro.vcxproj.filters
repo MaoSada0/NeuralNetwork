@@ -27,7 +27,7 @@
     <ClCompile Include="ActivateFunction.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="source.cpp">
+    <ClCompile Include="Neural.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

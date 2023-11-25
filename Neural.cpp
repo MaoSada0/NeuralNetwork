@@ -171,7 +171,7 @@ int main() {
 				}
 				cout << "ra: " << ra / examples * 100 << "\t" << "maxra: " << maxra / examples * 100 << "\t" << "epoch: " << count << "\tTIME: " << time.count() << endl;
 				count++;
-				if (count == 20) { // тк до 100% никогда не дойдем выйдем после 20 обучений
+				if (count == 25) { // тк до 100% никогда не дойдем выйдем после 20 обучений
 					break;
 				}
 			}

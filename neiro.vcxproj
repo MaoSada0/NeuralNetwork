@@ -137,7 +137,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="neiro.cpp" />
     <ClCompile Include="NetWork.cpp" />
-    <ClCompile Include="source.cpp" />
+    <ClCompile Include="Neural.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivateFunction.h" />
