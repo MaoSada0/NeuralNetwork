@@ -1,6 +1,8 @@
 # NeuralNetwork
 Приветствую всех! Здесь я опишу структуру нейронной сети.
 
+!!! ДЛЯ РАБОТЫ НУЖНА БИБЛИОТЕКА OPENCV !!!
+
 ## Структура файлов
 
 
@@ -70,3 +72,16 @@
 - ````WeightsUpdater(double lr)````- обновление весов
 - ````SaveWeights()````- сохраняем веса в файл
 - ````ReadWeights()````- читаем веса из файла
+
+### Neural (main)
+> main файл, в нем реализуем работу с нейросетью
+
+**Структура data_info**
+- ````double* pixels```` - пиксели цифры
+- ````int digit```` - цифра 0-9
+  
+**Методы:**
+- ````ReadDataNetWork(string path)````- читаем settings
+- ````ReadData(string path, const data_NetWork& data_NW, int& examples)```` - считываем данные цифр для нейронки
+- ````void checkNum()```` - угадываем пользовательскую цифру
+- ````main()```` - main
