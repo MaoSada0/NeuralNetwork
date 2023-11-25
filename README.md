@@ -64,5 +64,6 @@
 - ````PrintSettings()```` - выводим settings
 - ````SetInput(double* values)```` - подаем на вход нейросети данные
 - ````ForwardFeed()```` - функция прямого распростронения
+  ![ForwardFeed](https://github.com/MaoSada0/NeuralNetwork/blob/master/forReadme/forwardFeed.png)
 - ````SearchMaxIndex(double* value)```` - ищем индекс max элемента вектора значений
 - ````PrintValues```` - выводим значения на экран
