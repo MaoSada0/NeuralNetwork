@@ -83,7 +83,7 @@
 **Методы:**
 - ````ReadDataNetWork(string path)````- читаем settings
 - ````ReadData(string path, const data_NetWork& data_NW, int& examples)```` - считываем данные цифр для нейронки
-- ````void checkNum()```` - угадываем пользовательскую цифру
+- ````checkNum()```` - угадываем пользовательскую цифру
 - ````main()```` - main
 
 
