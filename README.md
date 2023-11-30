@@ -95,6 +95,6 @@
 ### Пример
 > Рисуем 28x28 пикселей изображение, сохраняем в папку numbers, после запуска в консоли пишем название файла с расширением.
 
-![View](https://github.com/MaoSada0/NeuralNetwork/blob/master/forReadme/temp.png)
+![View](https://github.com/MaoSada0/NeuralNetwork/blob/master/forReadme/howWork.gif)
 
-![View](https://github.com/MaoSada0/NeuralNetwork/blob/master/forReadme/consol.png)
+
