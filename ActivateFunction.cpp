@@ -16,8 +16,9 @@ void ActivateFunction::AF(double* value, int n) {
 double ActivateFunction::AFDer(double value) {
 	if (value < 0 || value > 1) {
 		value = 0.01;
+		return value;
 	}
-	return value;
+	return 1.;
 }
 
 void ActivateFunction::AFDer(double* value, int n) {

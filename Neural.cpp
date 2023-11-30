@@ -24,7 +24,7 @@ data_NetWork ReadDataNetWork(string path) {
 
 	while (!fin.eof()) {
 		fin >> tmp;
-		if (tmp == "NetWork") {
+		if (tmp == "NN") {
 			fin >> L;
 			data.Layers = L;
 			data.size = new int[L];
