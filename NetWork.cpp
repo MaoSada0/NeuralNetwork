@@ -54,7 +54,7 @@ double NetWork::ForwardFeed() {
 	for (int k = 1; k < Layers; ++k) {
 		Matrix::Multi(weights[k - 1], neurons_value[k - 1], size[k - 1], neurons_value[k]); 
 		Matrix::Sum(neurons_value[k], bios[k - 1], size[k]);
-		actFunc.use(neurons_value[k], size[k]); 
+		actFunc.AF(neurons_value[k], size[k]); 
 	}
 	int pred = SearchMaxIndex(neurons_value[Layers - 1]); 
 	return pred; //ответ нейросети
@@ -84,17 +84,17 @@ void NetWork::PrintValues(int L) {
 void NetWork::BackPropogation(double expect) {
 	for (int i = 0; i < size[Layers - 1]; i++) { // считаем дельту для выходных нейронов
 		if (i != (int)expect) {
-			neurons_error[Layers - 1][i] = -neurons_value[Layers - 1][i] * actFunc.useDer(neurons_value[Layers - 1][i]);
+			neurons_error[Layers - 1][i] = -neurons_value[Layers - 1][i] * actFunc.AFDer(neurons_value[Layers - 1][i]);
 		}
 		else {
-			neurons_error[Layers - 1][i] = (1.0 - neurons_value[Layers - 1][i]) * actFunc.useDer(neurons_value[Layers - 1][i]);
+			neurons_error[Layers - 1][i] = (1.0 - neurons_value[Layers - 1][i]) * actFunc.AFDer(neurons_value[Layers - 1][i]);
 		}
 	}
 
 	for (int k = Layers - 2; k > 0; k--) { // считаем дельту для скрытых нейронов
 		Matrix::Multi_T(weights[k], neurons_error[k + 1], size[k + 1], neurons_error[k]);
 		for (int j = 0; j < size[k]; j++) {
-			neurons_error[k][j] *= actFunc.useDer(neurons_value[k][j]);
+			neurons_error[k][j] *= actFunc.AFDer(neurons_value[k][j]);
 		}
 	}
 }
