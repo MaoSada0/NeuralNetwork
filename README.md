@@ -56,10 +56,10 @@
 - ````int* size```` - массив с количеством нейронов на каждом из слоев
 - ````ActivateFunction actFunc```` - АФ
 - ````Matrix* weights```` - матрица весов
-- ````double** bios```` - веса смещения
+- ````double** bias```` - веса смещения
 - ````double** neurons_value```` - значения нейронов
 - ````double** neurons_error```` - ошибки нейронов
-- ````double* neurons_bios_value```` - значения нейронов смещения
+- ````double* neurons_bias_value```` - значения нейронов смещения
   
 **Методы:**
 - ````Init(data_NetWork data)```` - инициализируем нейросеть 
