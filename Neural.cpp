@@ -169,7 +169,7 @@ int main() {
 				if (ra > maxra) {
 					maxra = ra;
 				}
-				cout << "ra: " << ra / examples * 100 << "\t" << "maxra: " << maxra / examples * 100 << "\t" << "epoch: " << count << "\tTIME: " << time.count() << endl;
+				cout << "Right ans: " << ra / examples * 100 << "\t" << "Max right ans: " << maxra / examples * 100 << "\t" << "Epoch: " << count << "\tTime: " << time.count() << endl;
 				count++;
 				if (count == 25) { // тк до 100% никогда не дойдем выйдем после 25 обучений
 					break;
