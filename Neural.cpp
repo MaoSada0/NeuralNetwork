@@ -128,7 +128,7 @@ int main() {
 	double right = 0; // правильная цифра
 	double predict = 0; // предсказанная цифра
 	double maxra = 0; // макс колво правильных ответов за один заход
-	int count = 0; // эпохи, заходы короче
+	int count = 0; // эпохи
 
 	bool study = true;
 	bool repeat = true;

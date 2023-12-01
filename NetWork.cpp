@@ -9,14 +9,14 @@ void NetWork::Init(data_NetWork data) {
 	}
 
 	weights = new Matrix[Layers - 1];
-	bios = new double* [Layers - 1];
+	bias = new double* [Layers - 1];
 
 	for (int i = 0; i < Layers - 1; i++) {
 		weights[i].Init(size[i + 1], size[i]);
-		bios[i] = new double[size[i + 1]];
+		bias[i] = new double[size[i + 1]];
 		weights[i].Rand();
 		for (int j = 0; j < size[i + 1]; j++) {
-			bios[i][j] = ((rand() % 50)) * 0.06 / (size[i] + 15);
+			bias[i][j] = ((rand() % 50)) * 0.06 / (size[i] + 15);
 		}
 	}
 
@@ -28,9 +28,9 @@ void NetWork::Init(data_NetWork data) {
 		neurons_error[i] = new double[size[i]];
 	}
 
-	neurons_bios_value = new double[Layers - 1];
+	neurons_bias_value = new double[Layers - 1];
 	for (int i = 0; i < Layers - 1; i++) {
-		neurons_bios_value[i] = 1;
+		neurons_bias_value[i] = 1;
 	}
 }
 
@@ -53,7 +53,7 @@ void NetWork::SetInput(double* values) {
 double NetWork::ForwardFeed() {
 	for (int k = 1; k < Layers; ++k) {
 		Matrix::Multi(weights[k - 1], neurons_value[k - 1], size[k - 1], neurons_value[k]); 
-		Matrix::Sum(neurons_value[k], bios[k - 1], size[k]);
+		Matrix::Sum(neurons_value[k], bias[k - 1], size[k]);
 		actFunc.AF(neurons_value[k], size[k]); 
 	}
 	int pred = SearchMaxIndex(neurons_value[Layers - 1]); 
@@ -75,11 +75,13 @@ int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в в
 	return prediction;
 }
 
+/*
 void NetWork::PrintValues(int L) {
 	for (int j = 0; j < size[L]; j++) {
 		cout << j << " " << neurons_value[L][j] << endl;
 	}
 }
+*/
 
 void NetWork::BackPropogation(double expect) {
 	for (int i = 0; i < size[Layers - 1]; i++) { // считаем дельту для выходных нейронов
@@ -109,7 +111,7 @@ void NetWork::WeightsUpdater(double lr) {
 	}
 	for (int i = 0; i < Layers - 1; i++) {
 		for (int k = 0; k < size[i + 1]; k++) {
-			bios[i][k] += neurons_error[i + 1][k] * lr;
+			bias[i][k] += neurons_error[i + 1][k] * lr;
 		}
 	}
 }
@@ -126,7 +128,7 @@ void NetWork::SaveWeights() {
 
 	for (int i = 0; i < Layers - 1; ++i) {
 		for (int j = 0; j < size[i + 1]; ++j) {
-			fout << bios[i][j] << " ";
+			fout << bias[i][j] << " ";
 		}
 	}
 	cout << "Weights saved \n";
@@ -145,7 +147,7 @@ void NetWork::ReadWeights() {
 	}
 	for (int i = 0; i < Layers - 1; ++i) {
 		for (int j = 0; j < size[i + 1]; ++j) {
-			fin >> bios[i][j];
+			fin >> bias[i][j];
 		}
 	}
 	cout << "Weights readed \n";

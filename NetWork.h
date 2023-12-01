@@ -16,10 +16,10 @@ class NetWork
 	int* size; // кол-во нейронов на слоях
 	ActivateFunction actFunc;
 	Matrix* weights; // матрица весов
-	double** bios; // веса смещения
+	double** bias; // веса смещения
 	double** neurons_value; // значения нейронов
 	double** neurons_error; // ошибка нейронов
-	double* neurons_bios_value; // значения нейронов смещения
+	double* neurons_bias_value; // значения нейронов смещения
 
 public:
 	void Init(data_NetWork data);
@@ -28,7 +28,7 @@ public:
 
 	double ForwardFeed();
 	int SearchMaxIndex(double* value);
-	void PrintValues(int L);
+	//void PrintValues(int L);
 
 	void BackPropogation(double expect);
 	void WeightsUpdater(double lr);
