@@ -67,7 +67,7 @@
 - ````SetInput(double* values)```` - подаем на вход нейросети данные
 - ````ForwardFeed()```` - функция прямого распростронения
 - ````SearchMaxIndex(double* value)```` - ищем индекс max элемента вектора значений
-- ````PrintValues```` - выводим значения на экран
+- ````printAnswers()```` - распределение нейронов в ответе нейросети
 - ````BackPropogation(double expect)````- функция обратного распростронения
 - ````WeightsUpdater(double lr)````- обновление весов
 - ````SaveWeights()````- сохраняем веса в файл
