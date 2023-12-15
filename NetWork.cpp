@@ -60,6 +60,22 @@ double NetWork::ForwardFeed() {
 	return pred; //ответ нейросети
 }
 
+void NetWork::printAnswers() {
+
+	double sum = 0;
+	double abssum = 0;
+	
+	std::cout << "Distribution of neurons" << endl;
+	for (int i = 0; i < 10; i++) {
+		std::cout << i << ") " << neurons_value[Layers - 1][i] << endl;
+		sum = sum + neurons_value[Layers - 1][i];
+		abssum = abssum + abs(neurons_value[Layers - 1][i]);
+	}
+
+	std::cout << "sum = " << sum << endl;
+	std::cout << "abssum = " << abssum << endl;
+}
+
 int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в вектор-столбце
 	double max = value[0];
 	int prediction = 0;
@@ -75,13 +91,6 @@ int NetWork::SearchMaxIndex(double* value) { // находим индекс макс элемента в в
 	return prediction;
 }
 
-/*
-void NetWork::PrintValues(int L) {
-	for (int j = 0; j < size[L]; j++) {
-		cout << j << " " << neurons_value[L][j] << endl;
-	}
-}
-*/
 
 void NetWork::BackPropogation(double expect) {
 	for (int i = 0; i < size[Layers - 1]; i++) { // считаем дельту для выходных нейронов

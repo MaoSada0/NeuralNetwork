@@ -90,7 +90,7 @@ void checkNum() {
 	cv::Mat image = cv::imread(s, cv::IMREAD_GRAYSCALE);
 
 	while (image.empty()) {
-		std::cerr << "Failed to load the image." << std::endl;
+		cerr << "Failed to load the image." << endl;
 		cout << "Enter name of file (name.png): ";
 		string s;
 		cin >> s;
@@ -98,21 +98,21 @@ void checkNum() {
 		image = cv::imread(s, cv::IMREAD_GRAYSCALE);
 	}
 
-	std::ofstream outputFile("files/output.txt");
+	ofstream outputFile("files/output.txt");
 
 	if (!outputFile.is_open()) {
-		std::cerr << "Failed to open the output file." << std::endl;
+		cerr << "Failed to open the output file." << endl;
 	}
 
-	outputFile << "Examples 1" << std::endl;
-	outputFile << "1" << std::endl;
+	outputFile << "Examples 1" << endl;
+	outputFile << "1" << endl;
 
-	for (int i = 0; i < image.rows; ++i) {
-		for (int j = 0; j < image.cols; ++j) {
+	for (int i = 0; i < image.rows; i++) {
+		for (int j = 0; j < image.cols; j++) {
 			float brightness = 1 - (static_cast<float>(image.at<uchar>(i, j)) / 255.0f);
 			outputFile << brightness << " ";
 		}
-		outputFile << std::endl;
+		outputFile << endl;
 	}
 
 	outputFile.close();
@@ -214,7 +214,8 @@ int main() {
 				NW.SetInput(data_test[i].pixels);
 				predict = NW.ForwardFeed();
 			}
-
+			NW.printAnswers();
+			cout << endl;
 			cout << "PREDICT: " << predict << endl;
 		}
 	}

@@ -27,6 +27,7 @@ public:
 	void SetInput(double* values);
 
 	double ForwardFeed();
+	void printAnswers();
 	int SearchMaxIndex(double* value);
 	//void PrintValues(int L);
 
